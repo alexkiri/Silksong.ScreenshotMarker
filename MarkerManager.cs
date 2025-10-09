@@ -100,7 +100,7 @@ public class MarkerManager : PluginComponent {
             }
         }
 
-        string fileName = DateTime.Now.ToString("yyyyMMdd_HHmmss_fff") + ".png";
+        string fileName = DateTime.Now.ToString("yyyyMMdd_HHmmss_fff") + ".exr";
         string filePath = GetScreenshotFilePath(saveSlot, fileName);
 
         var markerData = new MarkerData {
@@ -296,16 +296,19 @@ public class MarkerManager : PluginComponent {
         var origTargetTexture = camera.targetTexture;
         var origActive = RenderTexture.active;
 
-        RenderTexture rt = new RenderTexture(targetWidth, targetHeight, 24);
+        // RenderTexture rt = new RenderTexture(targetWidth, targetHeight, 24);
+        RenderTexture rt = new RenderTexture(targetWidth, targetHeight, 24, RenderTextureFormat.ARGBHalf);
         camera.targetTexture = rt;
         camera.Render();
 
         RenderTexture.active = rt;
-        Texture2D screenshot = new Texture2D(targetWidth, targetHeight, TextureFormat.RGB24, false);
+        // Texture2D screenshot = new Texture2D(targetWidth, targetHeight, TextureFormat.RGB24, false);
+        Texture2D screenshot = new Texture2D(targetWidth, targetHeight, TextureFormat.RGBAHalf, false);
         screenshot.ReadPixels(new Rect(0, 0, targetWidth, targetHeight), 0, 0);
         screenshot.Apply();
 
-        File.WriteAllBytes(filePath, screenshot.EncodeToPNG());
+        // File.WriteAllBytes(filePath, screenshot.EncodeToPNG());
+        File.WriteAllBytes(filePath, ImageConversion.EncodeToEXR(screenshot, Texture2D.EXRFlags.OutputAsFloat));
 
         camera.targetTexture = origTargetTexture;
         RenderTexture.active = origActive;

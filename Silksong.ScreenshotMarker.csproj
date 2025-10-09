@@ -44,7 +44,7 @@
             <Binaries Include="$(TargetDir)/$(TargetName).pdb"/>
         </ItemGroup>
 
-        <Copy SourceFiles="@(Binaries)" DestinationFolder="$(SilksongFolder)/BepInEx/scripts/$(TargetName)"/>
+        <Copy SourceFiles="@(Binaries)" DestinationFolder="$(SilksongFolder)/BepInEx/plugins/$(TargetName)"/>
 
         <PropertyGroup>
             <ExportFolder>bin/Publish</ExportFolder>
