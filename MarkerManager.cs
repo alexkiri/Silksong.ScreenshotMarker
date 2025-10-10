@@ -308,7 +308,7 @@ public class MarkerManager : PluginComponent {
         screenshot.Apply();
 
         // File.WriteAllBytes(filePath, screenshot.EncodeToPNG());
-        File.WriteAllBytes(filePath, ImageConversion.EncodeToEXR(screenshot, Texture2D.EXRFlags.OutputAsFloat));
+        File.WriteAllBytes(filePath, ImageConversion.EncodeToEXR(screenshot, Texture2D.EXRFlags.CompressPIZ));
 
         camera.targetTexture = origTargetTexture;
         RenderTexture.active = origActive;
